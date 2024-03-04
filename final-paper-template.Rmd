@@ -1,11 +1,29 @@
 ---
-title: "Impact of Labor Union on Firm Outcomes"
+title: "Impact of Works Councils on Firm's Labor Earnings"
 author: "Yehong Deng; Ramses Llobet; Chidozie Iwu"
-date: "Calendar date"
+date: \today
 output:
     html_document:
         theme: readable
 ---
+
+```{r, inlcude=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, error = FALSE)
+
+rm(list = ls())
+
+library(nlme)
+library(tinytable) # For LaTeX tables
+library(tidyverse)
+
+
+# load data
+
+load(file = "data/final_project.r")
+
+```
+
+
 
 ---
 references:
@@ -53,16 +71,51 @@ code.r{
 
 ## Abstract (<1/3 page or about 250 words)
 
-Include your abstract.
+abstract here
+
+
 
 ## Introduction/Motivation and study objectives (<1/3 page)
 
-Include a clearly stated research question that your project will answer and all relevant theoretical considerations. You should make references to some citations: we view @Lastname2000 as foundational work. This is a cool fact [@Bigdeal2009].
+
+What impact do labor organizations have on employee earnings? Economic sociology and labor economics literature suggest that in recent decades, labor shares— the portion of a firm's profit allocated to wages— have stagnated, failing to keep pace with productivity growth. This trend is particularly notable in developed nations, where income inequality has surged over the past three decades. Some scholars attribute the decline in labor shares to weakened labor organizations. Factors such as globalized capital, outsourcing, access to finance, along with deregulation and decentralization of wage bargaining institutions in Europe, have bolstered employers' bargaining power. Consequently, while productivity and profits have risen, average wages have been constrained.
+
+
+
+In this project, we aim to assess this argument using a longitudinal observational panel dataset comprising detailed establishment data from `r length(unique(df_long$idnum))` unique firms in Germany spanning 1998 to 2021. This dataset presents a prime opportunity to investigate the hypothesis of labor power and stagnant labor shares. It includes comprehensive information on each establishment's wage bill (total wages), employee count, subjective profit indicators, and various pertinent firm and labor institution details. Specifically, it covers whether an establishment has established a works council—a group of elected employees representing the workforce, cooperating with management, and ensuring compliance with laws, rules, health, and safety regulations. We anticipate analyzing the marginal effects of works councils on labor shares to ascertain the extent to which the observed stagnation in labor shares can be attributed to the decline in labor organization power.
+
+
+
+<!-- Include a clearly stated research question that your project will answer and all relevant theoretical considerations. You should make references to some citations: we view @Lastname2000 as foundational work. This is a cool fact [@Bigdeal2009]. -->
 
 
 ## Approach (< 5 pages total)
 
 This section should contain: Data set description and exploratory analyses; technical description of models; results and interpretation.
+
+
+### Data set description
+
+
+| Name          | Description                                                                                       |
+|---------------|---------------------------------------------------------------------------------------------------|
+| `idnum`       | Identification number of the establishment.                                                      |
+| `year`        | Year of the survey/wave.                                                                         |
+| `time`        | Time interval variable based on `year`, starting from 1998.                                        |
+| `average_pay`| Establishment's wage bill, serving as a proxy for labor shares.                                    |
+| `wcouncil`    | Presence of a works council in the establishment (`0`= No, `1`= Yes).                              |
+| `wagree`      | Coverage by collectively bargained agreements at the sector/industry level (`0`= No, `1`= Yes).    |
+| `sector`      | Sector of operation, following the Industry NACE classification, with 12 sectors represented.      |
+| `profit`      | Likert scale of subjective profit assessment for the previous fiscal year (`0`= Unsatisfactory, `5`= Very Good). |
+| `emp`         | Workforce or number of employees in the establishment.                                            |
+| `empt`        | Percentage of workforce in part-time contracts.                                                    |
+| `empw`        | Percentage of female workforce.                                                                   |
+| `firmsize`    | Ordinal scale representing firm size based on the number of workers (`1`= <50 employees, `4`= >250 employees). |
+
+
+
+
+
 
 This section should describe your analytic approach, introduce necessary notation and provide at least one key equation.
 
